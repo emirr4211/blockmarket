@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=0">
+<meta name="keywords" content="exploit, exploits, hack, hacks, cheats, developers, social, media, best, library, source, wearedevs">
+<meta name="description" content="Best website for Roblox exploits, a developers community, and more from WeAreDevs.">
+<title>Roblox Models & Kits & Paid Models - Block Market</title>
+<script src="cdn-cgi/apps/head/dM3ipLu7q0SolgbDApkhduCYXKU.js"></script><link rel="shortcut icon" href="favicon.ico">
+<link href="css/main.css?v=20" rel="stylesheet" type="text/css">
+<link href="css/themes/night.css?v=20" rel="stylesheet" type="text/css">
+<link href="css/navheader.css?v=20" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/timestamp.js"></script>
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(name,value,days) {
+		var expires = "";
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days*24*60*60*1000));
+			expires = "; expires=" + date.toUTCString();
+		}
+		document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    //Removes the stupid cloudflare parameters
+    history.replaceState && history.replaceState(null, '', location.pathname + location.search.replace(/[\?&](__cf_chl_jschl_tk__|__cf_chl_captcha_tk__)=[^&]+/, '').replace(/^&/, '?') + location.hash);
+</script>
+<link href="css/exploits.css?v=20&v2=4" rel="stylesheet" type="text/css">
+</head>
+<body class="container gapchildren">
+<header id="navigationbar" class="border1-bottom">
+<span class="menu-toggle "></span>
+<a id="foologo" href="https://discord.gg/GVyWXKSXUU" title="Block Market">Block Market</a>
+<ul class="navItems">
+<li class="navItem adTip">
+</li>
+<a id="foologo" href="https://discord.gg/GVyWXKSXUU" title="Block Market">Discord</a>
+</ul>
+<script>
+        //Used to send logout request to API
+		function logout(){
+            if(!confirm("You are about to logout")) return
+
+            fetch('https://forum.wearedevs.net/api/account/logout', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.success) window.location.reload()
+                else {
+                    if(res.reason) alert("Error: " + res.reason)
+                    else alert("An unexpected error occured...")
+                }
+            })
+            .catch(()=>alert("Failed to contact the server or an unexpected response was received..."))
+        }
+
+        function DeleteNotifications(id){
+            return fetch('/api/notifications', {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id
+                })
+            })
+        }
+        
+        function DeleteAllNotifs(el){
+            //The server will default to delete everything because there is no specified id
+            DeleteNotifications()
+            .then(res => res.json())
+            .then(res => {
+                if(res.success) {
+                    document.getElementsByClassName("notifications")[0].innerHTML = "<p>No notifications...</p>"
+                    document.getElementsByClassName("notifcount")[0].style.display = "none"
+                    document.getElementsByClassName("menu-toggle-notif")[0].classList.remove("menu-toggle-notif")
+                    el.style.display = "none"
+                }
+                //There should never be an error response
+                else alert("Failed to delete notification. Please contact an admin!")
+            })
+            .catch(e => alert("Failed to contact server"))
+        }
+
+        // Listen to all clicks on the document
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('message-notif')){
+                var parent = event.target.parentElement.parentElement
+                var id = parent.getAttribute("data-id")
+
+                DeleteNotifications(id)
+                .then(res => res.json())
+                .then(res => {
+                    if(res.success === true){
+                        var numNotifs = parent.parentElement.childElementCount
+                        document.getElementsByClassName("notifcount")[0].innerHTML = numNotifs - 1
+                        if(numNotifs <= 1){
+                            parent.parentElement.innerHTML = "No notifications"
+                            document.getElementsByClassName("notifcount")[0].remove()
+                            document.getElementsByClassName("deleteallnotifs")[0].remove()
+                            document.getElementsByClassName("menu-toggle-notif")[0].classList.remove("menu-toggle-notif")
+                        }
+                        parent.remove()
+                    }
+                })
+                .catch(e =>{})
+            }
+            //Navigation options display toggle (Mobile view)
+            else if(event.target.classList.contains('menu-toggle')){
+                if(document.getElementsByClassName("navItems")[0].style.display !== "flex"){
+                    document.getElementsByClassName("navItems")[0].style.display = "flex"
+                    document.getElementsByClassName("menu-toggle-notif")[0].classList.remove("menu-toggle-notif")
+                }
+                else {
+                    document.getElementsByClassName("navItems")[0].style.display = "none"
+                    if(document.getElementsByClassName("notification").length > 0) 
+                        document.getElementsByClassName("menu-toggle")[0].classList.add("menu-toggle-notif")
+                }
+            }
+            //Drop-menu toggle
+            else if(event.target.classList.contains('dropmenu-title')){
+                if(event.target.parentElement.getElementsByClassName("menu")[0].style.display !== "block"){
+                    event.target.parentElement.getElementsByClassName("menu")[0].style.display = "block"
+                }
+                else event.target.parentElement.getElementsByClassName("menu")[0].style.display = "none"
+
+                event.target.parentElement.onmouseleave = () => event.target.parentElement.getElementsByClassName("menu")[0].style.display = "none"
+            } 
+        })
+    </script>
+</header>
+<main>
+<div>
+<div class="boxad" style="display:flex; flex-direction:column;padding-left:0;">
+<script async="" src="pagead/js/f.txt?client=ca-pub-9142841210062390" crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9142841210062390" data-ad-slot="3739798263"></ins>
+<script>
+</script>
+<script async="" src="pagead/js/f.txt?client=ca-pub-9142841210062390" crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9142841210062390" data-ad-slot="3739798263"></ins>
+<script>
+</script>
+<script async="" src="pagead/js/f.txt?client=ca-pub-9142841210062390" crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9142841210062390" data-ad-slot="3739798263"></ins>
+<script>
+</script>
+</div>
+<div class="releases-header padding" style="padding-top: 0">
+<h1>Models</h1>
+<p>Roblox models for games</p>
+</div>
+<div class="releases">
+<div class="theme1 round border1 downloadOption">
+<div>
+<div class="round thumbnail">
+<img src="images/thumbnails/notfound.jpeg" alt="Krnl" title="Krnl">
+<h2 class="downloadTitle">Teleport System</h2>
+</div>
+<p class="description">Bu Modelde Bir Açıklama Yok.</p>
+</div>
+<div class="download_metadata verticalCenter">
+<div class="verticalCenter">
+<span class="microsoftstore" title="Available on Windows, Microsoft Store edition"></span>
+<p class="verticalCenter"><span class="icon-download"></span></p>
+</div>
+<a class="moreinfo-card-button" href="https://discord.gg/4PPvQeU7Wn" title="Learn more about Krnl">
+<p>Discord</p>
+</a>
+<a class="lessRound release-card-button" href="https://www.roblox.com/library/7196534957/TeleportSystem" title="Download Krnl">
+<p>Model Link</p>
+</a>
+</div>
+</div>
+<div class="releases">
+<div class="theme1 round border1 downloadOption">
+<div>
+<div class="round thumbnail">
+<img src="images/thumbnails/notfound.jpeg" alt="Krnl" title="Krnl">
+<h2 class="downloadTitle">Bank Robbery</h2>
+</div>
+<p class="description">Bu Modelde Bir Açıklama Yok.</p>
+</div>
+<div class="download_metadata verticalCenter">
+<div class="verticalCenter">
+<span class="microsoftstore" title="Available on Windows, Microsoft Store edition"></span>
+<p class="verticalCenter"><span class="icon-download"></span></p>
+</div>
+<a class="moreinfo-card-button" href="https://discord.gg/4PPvQeU7Wn" title="Learn more about Krnl">
+<p>Discord</p>
+</a>
+<a class="lessRound release-card-button" href="https://www.roblox.com/library/7269528667/BankRobbery" title="Download Krnl">
+<p>Model Link</p>
+</a>
+</div>
+</div>
+</div>
+<div class="releases">
+<div class="theme1 round border1 downloadOption">
+<div>
+<div class="round thumbnail">
+<img src="images/thumbnails/notfound.jpeg" alt="Krnl" title="Krnl">
+<h2 class="downloadTitle">Job System</h2>
+</div>
+<p class="description">ServerStorage'ye attığınız klasörde npcleri isterseniz değişebilir, daha fazlasını ekleyebilirsiniz</p>
+</div>
+<div class="download_metadata verticalCenter">
+<div class="verticalCenter">
+<span class="microsoftstore" title="Available on Windows, Microsoft Store edition"></span>
+<p class="verticalCenter"><span class="icon-download"></span></p>
+</div>
+<a class="moreinfo-card-button" href="https://discord.gg/4PPvQeU7Wn" title="Learn more about Krnl">
+<p>Discord</p>
+</a>
+<a class="lessRound release-card-button" href="https://www.roblox.com/library/9824878760/JobSystem" title="Download Krnl">
+<p>Model Link</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="releases">
+<div class="theme1 round border1 downloadOption">
+<div>
+<div class="round thumbnail">
+<img src="images/thumbnails/notfound.jpeg" alt="Krnl" title="Krnl">
+<h2 class="downloadTitle">Sawmill</h2>
+</div>
+<p class="description">Bu Modelde Bir Açıklama Yok.</p>
+</div>
+<div class="download_metadata verticalCenter">
+<div class="verticalCenter">
+<span class="microsoftstore" title="Available on Windows, Microsoft Store edition"></span>
+<p class="verticalCenter"><span class="icon-download"></span></p>
+</div>
+<a class="moreinfo-card-button" href="https://discord.gg/4PPvQeU7Wn" title="Learn more about Krnl">
+<p>Discord</p>
+</a>
+<a class="lessRound release-card-button" href="https://www.roblox.com/library/9897830572/Sawmill" title="Download Krnl">
+<p>Model Link</p>
+</a>
+</div>
+<br>
+<div>
+<div class="boxad" style="display:flex; flex-direction:column;padding-left:0;">
+<script async="" src="pagead/js/f.txt?client=ca-pub-9142841210062390" crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9142841210062390" data-ad-slot="3739798263"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<script async="" src="pagead/js/f.txt?client=ca-pub-9142841210062390" crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9142841210062390" data-ad-slot="3739798263"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<div class="releases-header padding">
+</div>
+</div>
+</div>
+</div>
+</main>
+<style>
+footer{
+	box-shadow: 0 0px 5px -3px #202225;
+	margin-top: 50px;
+	padding: 10px 50px;
+	color: gray;
+	text-align: center;
+}
+
+.footerlinks{
+	display: inline-flex;
+	padding: 0;
+}
+
+.footerlinks li{
+	list-style-type: none;
+	margin-left: 12px;
+}
+
+.footerlinks li:first-of-type{
+	margin: 0;
+}
+
+/* Slider */
+.switch{
+	margin-left: var(--less-padding);
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 28px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider{
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+	border-radius: 25px;
+}
+
+.slider:before{
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .3s;
+	transition: .3s;
+	border-radius: 50%;
+}
+
+.switch input:checked + .slider:before{
+  	margin-left: 22px;
+}
+
+.switch input:checked + .slider{
+    background-color: #2ecc71;
+}
+</style>
+<footer class="theme1">
+<ul class="footerlinks">
+<li><a href="https://discord.gg/GVyWXKSXUU" title="Privacy Policy">Discord</a></li>
+</ul>
+<br>
+<br>
+<p>© <script>document.write(new Date().getFullYear())</script> Block Market</p>
+</footer>
+<script>
+			// Push notifications setup
+			
+			var registration = null
+			
+			function urlBase64ToUint8Array(base64String) {
+			  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+			  const base64 = (base64String + padding)
+				.replace(/\-/g, '+')
+				.replace(/_/g, '/')
+			  ;
+			  const rawData = window.atob(base64);
+			  return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
+			}
+			
+			function askPermission() {
+			  return new Promise(function(resolve, reject) {
+				const permissionResult = Notification.requestPermission(function(result) {
+				  resolve(result);
+				});
+
+				if (permissionResult) {
+				  permissionResult.then(resolve, reject);
+				}
+			  })
+			  .then(async function(permissionResult) {
+				if (permissionResult === 'granted') {
+					//Notifications are enabled
+					//Create subscription
+					const subscribeOptions = {
+					  userVisibleOnly: true,
+					  applicationServerKey: urlBase64ToUint8Array(
+						'BGyra8TIIln-swj30Hi4ZulNFcTe_EcmhqhIs0W1gMQv6ufiEorqnE-KvcgIO6kIfia6Jq0XYdHGv10jUdhiEko'
+					  )
+					};
+
+					let pushSubscription = await registration.pushManager.subscribe(subscribeOptions);
+
+					fetch('/api/notifications/subscribe', {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(pushSubscription)
+					})
+					.then(res => res.json())
+					.then(res => {
+						if(!res.success) {
+							if(res.reason) alert("Error: " + res.reason)
+							else alert("An unexpected error occured...")
+						}
+					})
+					.catch(()=>alert("Failed to contact the server or an unexpected response was received..."))
+				}
+				else {
+				  throw new Error('We weren\'t granted permission.');
+				}
+			  });
+			}
+			
+			if ('serviceWorker' in navigator) { 
+				//Service worker is supported on this browser
+				
+				//Register the service worker
+				navigator.serviceWorker.register('/js/service-worker.js')
+				.then(function(_registration) {
+					console.log('Service worker successfully registered.');
+					
+					registration = _registration
+					
+					if ('PushManager' in window) { 
+						//Push manager is supported on this browser(Used for push notifications)
+						if (Notification.permission !== "granted") {
+							askPermission();
+						} //else push notifications are already enabled
+					}
+				})
+				.catch(function(err) {
+					console.warn('Unable to register service worker.', err);
+				});
+			}
+		</script>
+</body>
+</html>
